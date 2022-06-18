@@ -1,0 +1,16 @@
+{
+  "name": "justin-muir-brainflix-api",
+  "version": "1.0.0",
+  "description": "Back-end server for brainflix",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Justin Muir",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.1"
+  }
+}
