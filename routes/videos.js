@@ -12,7 +12,14 @@ router.get('/register', (req, res) => {
 });
 
 router.get('/videos', API.validateKey, (req, res) => {
-    res.send(videoData);
+    const vidData = videoData.map(video => ({
+        "id": video.id,
+        "title": video.title,
+        "channel": video.channel,
+        "image": video.image
+    }));
+
+    res.send(vidData);
 });
 
 router.get('/videos/:id', API.validateKey, (req, res) => {
