@@ -3,15 +3,32 @@ const fs = require('fs');
 const videoData = require('../data/videos.json');
 const router = express.Router();
 const { v4: uuid } = require('uuid');
-const { title } = require('process');
 
-addVideo = (title, desc, img) => {
-    return {
+const API = require('../middleware/apikeys');
+
+router.get('/register', (req, res) => {
+    const newKey = API.newKey();
+    res.json({"api_key":newKey});
+});
+
+router.get('/videos', API.validateKey, (req, res) => {
+    res.send(videoData);
+});
+
+router.get('/videos/:id', API.validateKey, (req, res) => {
+    const video = videoData.find(video => video.id === req.params.id)
+    res.send(video);
+});
+
+router.post('/videos', API.validateKey, (req, res) => {
+    
+    const { title, description, image } = req.body;
+    const videoToAdd = {
         id: uuid(),
         title: title,
         channel: 'BrainStation Magic Fun Time',
-        image: img,
-        description: desc,
+        image: image,
+        description: description,
         views: 0,
         likes: 0,
         duration: '1:09',
@@ -41,29 +58,17 @@ addVideo = (title, desc, img) => {
             }
         ]
     }
-}
-
-router.get('/videos', (req, res) => {
-    res.send(videoData);
-});
-
-router.get('/videos/:id', (req, res) => {
-    const video = videoData.find(video => video.id === req.params.id)
-    res.send(video);
-});
-
-router.post('/videos', (req, res) => {
-    const id = uuid();
-    const { title, description, image } = req.body;
-    const newVideo = addVideo(title, description, image);
-    videoData.push(newVideo);
+    
+    videoData.push(videoToAdd);
+    
     fs.writeFile('./data/videos.json', JSON.stringify(videoData), (err) => {
         if (err) throw err;
     });
+
     res.send('video uploaded!');
 });
 
-router.put('/videos/:videoId/likes', (req, res) => {
+router.put('/videos/:videoId/likes', API.validateKey, (req, res) => {
     
 });
 
