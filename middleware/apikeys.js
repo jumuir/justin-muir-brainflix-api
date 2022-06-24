@@ -19,7 +19,7 @@ const validateKey = (req, res, next) => {
         next();
     }
     else {
-        res.status(403).send('You are not authenticated, please get an API key first at /register')
+        res.status(401).send('You are not authenticated, please get an API key first at /register')
     }
 }
 
