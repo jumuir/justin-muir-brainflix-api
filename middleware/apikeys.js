@@ -15,11 +15,10 @@ const validateKey = (req, res, next) => {
     let api_key = req.query.api_key;
 
     if (keys.find(key => key === api_key)) {
-        console.log("API Key authenticated");
         next();
     }
     else {
-        res.status(403).send('You are not authenticated, please get an API key first at /register')
+        res.status(401).send('You are not authenticated, please get an API key first at /register')
     }
 }
 
