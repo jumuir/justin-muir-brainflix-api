@@ -61,7 +61,7 @@ router.post('/videos', API.validateKey, upload.single('image'), (req, res) => {
         views: 0,
         likes: 0,
         duration: '1:09',
-        video: 'https://project-2-api.herokuapp.com/stream',
+        video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
         timestamp: Date.now(),
         comments: [
             {
@@ -135,9 +135,8 @@ router.delete('/videos/:videoId/comments/:commentId', API.validateKey, (req, res
 router.put('/videos/:videoId/likes', API.validateKey, (req, res) => {
     videoData.forEach(video => {
         if (video.id === req.params.videoId) {
-            console.log(video.id, video.likes);
+
             video.likes = Number(video.likes) + 1;
-            console.log(video.id, video.likes);
 
             fs.writeFile('./data/videos.json', JSON.stringify(videoData), (err) => {
                 if (err) throw err;
@@ -151,10 +150,10 @@ router.put('/videos/:videoId/likes', API.validateKey, (req, res) => {
 // add a view to the video
 router.put('/videos/:videoId/views', API.validateKey, (req, res) => {
     videoData.forEach(video => {
-        if (video.id === req.params.id) {
-            
-            video.views = Number(video.views) + 1;
+        if (video.id === req.params.videoId) {
 
+            video.views = Number(video.views) + 1;
+            
             fs.writeFile('./data/videos.json', JSON.stringify(videoData), (err) => {
                 if (err) throw err;
             });
