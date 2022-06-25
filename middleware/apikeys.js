@@ -15,7 +15,6 @@ const validateKey = (req, res, next) => {
     let api_key = req.query.api_key;
 
     if (keys.find(key => key === api_key)) {
-        console.log("API Key authenticated");
         next();
     }
     else {

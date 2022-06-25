@@ -14,4 +14,4 @@ app.use(express.static('./public'));
 app.use('/', videoRoutes);
 
 
-app.listen(PORT, ()=> console.log(`Running with the devil on port ${PORT}`));
+app.listen(PORT, ()=> console.log(`Running with scissors on port ${PORT}`));
